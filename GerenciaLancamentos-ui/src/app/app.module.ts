@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +23,8 @@ import { AppComponent } from './app.component';
     ButtonModule,
     InputTextModule,
     TableModule,
-    TabViewModule
+    TabViewModule,
+    TooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
