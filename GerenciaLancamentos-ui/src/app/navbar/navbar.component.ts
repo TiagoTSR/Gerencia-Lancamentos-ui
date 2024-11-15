@@ -7,8 +7,5 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  exibindoMenu: boolean = false;
 }
