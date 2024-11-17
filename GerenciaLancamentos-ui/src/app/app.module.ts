@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { TooltipModule } from 'primeng/tooltip';
+import { CalendarModule } from 'primeng/calendar';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,7 +33,8 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
     InputTextModule,
     TableModule,
     TabViewModule,
-    TooltipModule
+    TooltipModule,
+    CalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
