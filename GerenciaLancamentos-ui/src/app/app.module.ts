@@ -8,6 +8,8 @@ import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { TooltipModule } from 'primeng/tooltip';
 import { CalendarModule } from 'primeng/calendar';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -34,7 +36,9 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
     TableModule,
     TabViewModule,
     TooltipModule,
-    CalendarModule
+    CalendarModule,
+    SelectButtonModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
