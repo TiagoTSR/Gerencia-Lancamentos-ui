@@ -1,3 +1,4 @@
+import { PessoasModule } from './pessoas/pessoas.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,8 +19,6 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
-import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 import { MessageComponent } from './message/message.component';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 
@@ -27,15 +26,16 @@ import { LancamentosModule } from './lancamentos/lancamentos.module';
   declarations: [
     AppComponent,
     NavbarComponent,
-    PessoasPesquisaComponent,
-    PessoaCadastroComponent,
-    MessageComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+
+    LancamentosModule,
+    PessoasModule,
 
     ButtonModule,
     InputTextModule,
@@ -46,8 +46,8 @@ import { LancamentosModule } from './lancamentos/lancamentos.module';
     SelectButtonModule,
     DropdownModule,
     InputNumberModule,
-    InputMaskModule,
-    LancamentosModule
+    InputMaskModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
