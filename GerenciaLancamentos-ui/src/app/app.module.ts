@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,13 +20,18 @@ import { CoreModule } from './core/core.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+
+    ConfirmDialogModule,
     ToastModule,
 
     LancamentosModule,
     PessoasModule,
     CoreModule
   ],
-  providers: [],
+  providers: [
+    ConfirmationService,
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
