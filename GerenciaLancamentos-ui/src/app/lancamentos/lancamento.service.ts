@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
 
 
 export class LancamentoFiltro {
-  descricao?: string;
-  dataVencimentoInicio?: Date;
-  dataVencimentoFim?: Date;
-  pagina = 0;
-  itensPorPagina = 5;
+  descricao?: string
+  dataVencimentoInicio?: Date
+  dataVencimentoFim?: Date
+  pagina: number = 0
+  itensPorPagina: number = 5
 }
 
 @Injectable({
@@ -54,6 +54,14 @@ export class LancamentoService {
 
         return resultado;
       });
+  }
+
+  excluir(codigo: number): Promise<void> {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.delete<void>(`${this.lancamentosUrl}/${codigo}`, { headers })
+      .toPromise();
   }
 
 }

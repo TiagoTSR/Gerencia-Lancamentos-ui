@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LancamentoFiltro, LancamentoService } from './../lancamento.service';
-import { TableLazyLoadEvent } from 'primeng/table';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -9,13 +11,18 @@ import { TableLazyLoadEvent } from 'primeng/table';
 })
 export class LancamentosPesquisaComponent implements OnInit {
 
+
   filtro = new LancamentoFiltro();
 
   totalRegistros: number = 0
 
   lancamentos: any[] = [];
+  @ViewChild('tabela') grid!: Table;
 
-  constructor(private lancamentoService: LancamentoService) { }
+  constructor(
+    private lancamentoService: LancamentoService,
+    private messageService: MessageService
+  ) { }
 
   ngOnInit() {
   }
@@ -33,6 +40,19 @@ export class LancamentosPesquisaComponent implements OnInit {
   aoMudarPagina(event: TableLazyLoadEvent) {
     const pagina = event!.first! / event!.rows!;
     this.pesquisar(pagina);
+  }
+
+  excluir(lancamento: any) {
+    this.lancamentoService.excluir(lancamento.codigo)
+      .then(() => {
+        if (this.grid.first === 0) {
+          this.pesquisar();
+        } else {
+          this.grid.reset();
+        }
+
+        this.messageService.add({ severity: 'success', detail: 'Lançamento excluído com sucesso!' })
+      })
   }
 
 }
