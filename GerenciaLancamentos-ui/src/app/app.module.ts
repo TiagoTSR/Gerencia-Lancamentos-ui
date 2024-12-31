@@ -32,19 +32,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppRoutingModule,
     BrowserAnimationsModule,
 
-    ConfirmDialogModule,
-    ToastModule,
-
     LancamentosModule,
     PessoasModule,
-    CoreModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+    CoreModule
   ],
   providers: [
     MessageService,

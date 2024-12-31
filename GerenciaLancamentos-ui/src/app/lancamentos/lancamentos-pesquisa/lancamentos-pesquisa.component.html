@@ -32,7 +32,7 @@
   <div class="grid">
     <div class="col-12">
       <p-table [value]="lancamentos" [responsive]="true" [paginator]="true" [rows]="filtro.itensPorPagina" [lazy]="true"
-        [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
+        [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
         <ng-template pTemplate="header">
           <tr>
             <th>Pessoa</th>
@@ -67,13 +67,15 @@
 
             <td class="col-valor">
               <span class="p-column-title">Valor</span>
-              <span [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">{{ lancamento.valor | number:'1.2-2'
-                }}</span>
+              <span [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">
+                {{ lancamento.valor | number:'1.2-2':'pt-BR'}}
+              </span>
             </td>
 
             <td class="col-acoes">
               <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
+                (click)="confirmarExclusao(lancamento)"></button>
             </td>
           </tr>
         </ng-template>
