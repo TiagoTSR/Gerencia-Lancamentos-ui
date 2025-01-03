@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LancamentoFiltro, LancamentoService } from './../lancamento.service';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { MessageService,ConfirmationService } from 'primeng/api';
+import { ErrorHandlerService } from '../../core/error-handler.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -20,6 +21,7 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   constructor(
     private lancamentoService: LancamentoService,
+    private errorHandler: ErrorHandlerService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) { }
@@ -34,7 +36,8 @@ export class LancamentosPesquisaComponent implements OnInit {
       .then((resultado: any) => {
         this.lancamentos = resultado.lancamentos;
         this.totalRegistros = resultado.total;
-      });
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   aoMudarPagina(event: TableLazyLoadEvent) {
