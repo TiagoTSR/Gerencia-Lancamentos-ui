@@ -1,5 +1,5 @@
 .navbar {
-  padding: 20px 10px 10px;
+  padding: 20px 0 10px;
   background-color: #1e94d2;
 }
 
@@ -43,4 +43,8 @@
 
 .navbar-menuitem a:hover {
   color: #fff;
+}
+
+.navbar-menuitem.ativo {
+  background-color: #494541;
 }
