@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
 import { Lancamento } from './../../core/model';
@@ -34,7 +34,8 @@ export class LancamentoCadastroComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private messageService: MessageService,
     private errorHandler: ErrorHandlerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -86,28 +87,45 @@ export class LancamentoCadastroComponent implements OnInit {
     }
   }
 
-atualizarLancamento(form: NgForm) {
-  this.lancamentoService.atualizar(this.lancamento)
-    .then((lancamento: Lancamento | undefined) => {
-      if (lancamento) {
-        this.lancamento = lancamento;
-        this.messageService.add({ severity: 'success', detail: 'Lançamento alterado com sucesso!' });
-      } else {
-        this.messageService.add({ severity: 'error', detail: 'Erro ao atualizar o lançamento.' });
-      }
-    })
-    .catch(erro => this.errorHandler.handle(erro));
-}
+  atualizarLancamento(form: NgForm) {
+    this.lancamentoService.atualizar(this.lancamento)
+      .then((lancamento: Lancamento | undefined) => {
+        if (lancamento) {
+          this.lancamento = lancamento;
+          this.messageService.add({ severity: 'success', detail: 'Lançamento alterado com sucesso!' });
+        } else {
+          this.messageService.add({ severity: 'error', detail: 'Erro ao atualizar o lançamento.' });
+        }
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
 
   adicionarLancamento(form: NgForm) {
     this.lancamentoService.adicionar(this.lancamento)
-      .then(() => {
-        this.messageService.add({ severity: 'success', detail: 'Lançamento adicionado com sucesso!' });
+      .then((lancamentoAdicionado: Lancamento | undefined) => {
+        if (lancamentoAdicionado) {
+          this.messageService.add({ severity: 'success', detail: 'Lançamento adicionado com sucesso!' });
 
-        form.reset();
-        this.lancamento = new Lancamento();
-      }
-      ).catch(erro => this.errorHandler.handle(erro));
+          // form.reset();
+          // this.lancamento = new Lancamento();
+          this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
+        } else {
+          this.messageService.add({ severity: 'error', detail: 'Erro ao adicionar o lançamento.' });
+        }
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+
+  novo(form: NgForm) {
+    form.reset();
+
+    setTimeout(() => {
+      this.lancamento = new Lancamento();
+    }, 1);
+
+    this.router.navigate(['lancamentos/novo']);
   }
 
 }
