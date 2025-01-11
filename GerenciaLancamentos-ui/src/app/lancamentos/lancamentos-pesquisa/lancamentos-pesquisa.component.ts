@@ -3,6 +3,7 @@ import { LancamentoFiltro, LancamentoService } from './../lancamento.service';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 import { MessageService,ConfirmationService } from 'primeng/api';
 import { ErrorHandlerService } from '../../core/error-handler.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -10,7 +11,6 @@ import { ErrorHandlerService } from '../../core/error-handler.service';
   styleUrls: ['./lancamentos-pesquisa.component.css']
 })
 export class LancamentosPesquisaComponent implements OnInit {
-
 
   filtro = new LancamentoFiltro();
 
@@ -23,10 +23,12 @@ export class LancamentosPesquisaComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private errorHandler: ErrorHandlerService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle('Pesquisa de lançamentos')
   }
 
   pesquisar(pagina: number = 0): void {
