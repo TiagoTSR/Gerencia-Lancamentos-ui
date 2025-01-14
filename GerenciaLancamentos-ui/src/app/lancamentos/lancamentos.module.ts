@@ -16,7 +16,7 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
 import { LancamentosGridComponent } from './lancamentos-grid/lancamentos-grid.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { SharedModule } from '../shared/shared.module';
-import { RouterModule } from '@angular/router';
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
 
 
 
@@ -26,7 +26,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule,
+
 
     ButtonModule,
     InputTextModule,
@@ -38,7 +38,8 @@ import { RouterModule } from '@angular/router';
     DropdownModule,
     InputNumberModule,
     InputMaskModule,
-    SharedModule
+    SharedModule,
+    LancamentosRoutingModule
   ],
   declarations: [LancamentosPesquisaComponent,
     LancamentoCadastroComponent,
