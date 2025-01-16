@@ -12,9 +12,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LancamentosModule } from './lancamentos/lancamentos.module';
+
 import { CoreModule } from './core/core.module';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LancamentosModule } from './lancamentos/lancamentos.module';
 
 // Função para configurar o TranslateHttpLoader
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {

@@ -9,28 +9,30 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
-import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { SharedModule } from "../shared/shared.module";
+import { PessoasRoutingModule } from './pessoas-routing.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     PessoaCadastroComponent,
-    PessoasGridComponent,
     PessoasPesquisaComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
+
     InputTextModule,
     ButtonModule,
     TableModule,
     TooltipModule,
     InputMaskModule,
-    SharedModule
-],
-  exports: [
 
-  ]
+    SharedModule,
+    PessoasRoutingModule
+  ],
+  exports: []
 })
 export class PessoasModule { }

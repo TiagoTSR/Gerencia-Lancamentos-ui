@@ -68,12 +68,30 @@ export class PessoaService {
       .toPromise();
   }
 
- adicionar(pessoa: Pessoa): Promise<Pessoa | undefined> {
-     const headers = new HttpHeaders()
-       .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
-       .append('Content-Type', 'application/json');
+  adicionar(pessoa: Pessoa): Promise<Pessoa | undefined > {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
 
-     return this.http.post<Pessoa>(this.pessoasUrl, pessoa, { headers }).toPromise();
-   }
+    return this.http.post<Pessoa>(this.pessoasUrl, pessoa, { headers })
+      .toPromise();
+  }
+
+  atualizar(pessoa: Pessoa): Promise<Pessoa | undefined > {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
+
+    return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa, { headers })
+      .toPromise();
+  }
+
+  buscarPorCodigo(codigo: number): Promise<Pessoa | undefined > {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.get<Pessoa>(`${this.pessoasUrl}/${codigo}`, { headers })
+      .toPromise();
+  }
 
 }
