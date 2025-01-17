@@ -14,7 +14,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-pessoa-cadastro',
   templateUrl: './pessoa-cadastro.component.html',
-  styleUrls: ['./pessoa-cadastro.component.css']
+  styleUrls: ['./pessoa-cadastro.component.scss']
 })
 export class PessoaCadastroComponent implements OnInit {
   pessoa: Pessoa = new Pessoa();

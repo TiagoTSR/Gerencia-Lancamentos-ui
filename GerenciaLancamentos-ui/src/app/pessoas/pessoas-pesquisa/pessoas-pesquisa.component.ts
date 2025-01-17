@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-pessoas-pesquisa',
   templateUrl: './pessoas-pesquisa.component.html',
-  styleUrls: ['./pessoas-pesquisa.component.css']
+  styleUrls: ['./pessoas-pesquisa.component.scss']
 })
 export class PessoasPesquisaComponent implements OnInit {
   totalRegistros = 0;

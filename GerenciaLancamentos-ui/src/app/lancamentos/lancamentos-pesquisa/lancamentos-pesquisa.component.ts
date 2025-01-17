@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-lancamentos-pesquisa',
   templateUrl: './lancamentos-pesquisa.component.html',
-  styleUrls: ['./lancamentos-pesquisa.component.css']
+  styleUrls: ['./lancamentos-pesquisa.component.scss']
 })
 export class LancamentosPesquisaComponent implements OnInit {
 
