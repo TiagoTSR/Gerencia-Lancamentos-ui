@@ -20,18 +20,23 @@ export class AuthService {
   login(usuario: string, senha: string): Promise<void> {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')
-      .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+      .append('Authorization', 'Basic VGlhZ286bm9uZTM0NQ==');
 
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
     return this.http.post(this.oauthTokenUrl, body, { headers })
       .toPromise()
       .then((response: any) => {
-        console.log(response);
         this.armazenarToken(response['access_token']);
       })
       .catch(response => {
-        console.log(response);
+        if (response.status === 400) {
+          if (response.error.error === 'invalid_grant') {
+            return Promise.reject('Usuário ou senha inválida!');
+          }
+        }
+
+        return Promise.reject(response);
       });
   }
 
