@@ -17,6 +17,7 @@ import { ErrorHandlerService } from './error-handler.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from '../seguranca/auth.service';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -53,6 +54,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   providers: [
     DatePipe,
     ErrorHandlerService,
+    AuthService,
 
     MessageService,
     ConfirmationService,
