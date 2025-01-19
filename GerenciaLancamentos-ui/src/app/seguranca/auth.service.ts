@@ -22,9 +22,9 @@ export class AuthService {
       .append('Content-Type', 'application/x-www-form-urlencoded')
       .append('Authorization', 'Basic VGlhZ286bm9uZTM0NQ==');
 
-      const body = `username=${usuario}&password=${senha}&grant_type=password`;
+    const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
-      return this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
+    return this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
       .toPromise()
       .then((response: any) => {
         this.armazenarToken(response['access_token']);
@@ -43,7 +43,7 @@ export class AuthService {
   obterNovoAccessToken(): Promise<void> {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')
-      .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+      .append('Authorization', 'Basic VGlhZ286bm9uZTM0NQ==');
 
     const body = 'grant_type=refresh_token';
 
@@ -70,6 +70,16 @@ export class AuthService {
 
   temPermissao(permissao: string) {
     return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
+  }
+
+  temQualquerPermissao(roles: any) {
+    for (const role of roles) {
+      if (this.temPermissao(role)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public armazenarToken(token: string) {
