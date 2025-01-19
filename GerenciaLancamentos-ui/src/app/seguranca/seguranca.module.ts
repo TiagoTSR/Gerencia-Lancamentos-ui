@@ -10,7 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { LoginFormComponent } from './login-form/login-form.component';
 
 import { SegurancaRoutingModule } from './seguranca-routing.module';
-import { GerenciaHttpInterceptor } from './gerencia-http';
+import { GerenciaHttpInterceptor } from './gerencia-http-interceptor';
 
 export function tokenGetter(): string {
   return localStorage.getItem('token')!;
