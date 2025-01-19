@@ -1,14 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LancamentoFiltro, LancamentoService } from './../lancamento.service';
-import { Table, TableLazyLoadEvent } from 'primeng/table';
-import { MessageService,ConfirmationService } from 'primeng/api';
-import { ErrorHandlerService } from '../../core/error-handler.service';
 import { Title } from '@angular/platform-browser';
+
+import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
+import { Table, TableLazyLoadEvent } from 'primeng/table';
+
+import { AuthService } from './../../seguranca/auth.service';
+import { LancamentoFiltro, LancamentoService } from './../lancamento.service';
+import { ErrorHandlerService } from '../../core/error-handler.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
   templateUrl: './lancamentos-pesquisa.component.html',
-  styleUrls: ['./lancamentos-pesquisa.component.scss']
+  styleUrls: ['./lancamentos-pesquisa.component.css']
 })
 export class LancamentosPesquisaComponent implements OnInit {
 
@@ -20,6 +23,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   @ViewChild('tabela') grid!: Table;
 
   constructor(
+    private auth: AuthService,
     private lancamentoService: LancamentoService,
     private errorHandler: ErrorHandlerService,
     private messageService: MessageService,
@@ -70,4 +74,7 @@ export class LancamentosPesquisaComponent implements OnInit {
       })
   }
 
+  naoTemPermissao(permissao: string) {
+    return !this.auth.temPermissao(permissao);
+  }
 }
