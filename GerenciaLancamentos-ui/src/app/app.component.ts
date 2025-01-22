@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { PrimeNGConfig } from 'primeng/api';
 
@@ -9,9 +10,11 @@ import { PrimeNGConfig } from 'primeng/api';
 })
 export class AppComponent {
   title = 'GerenciaLancamentos-ui';
+
   constructor(
     private config: PrimeNGConfig,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -19,4 +22,9 @@ export class AppComponent {
     this.translateService.get('primeng')
       .subscribe(res => this.config.setTranslation(res));
   }
+
+  exibindoNavbar() {
+    return this.router.url !== '/login';
+  }
+
 }

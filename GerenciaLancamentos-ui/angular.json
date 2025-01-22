@@ -35,9 +35,16 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "src/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "public",
+                "output": "/public"
               }
             ],
+
             "styles": [
               "src/styles.scss",
               "node_modules/primeng/resources/themes/saga-blue/theme.css",
