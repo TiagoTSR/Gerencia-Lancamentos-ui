@@ -82,10 +82,11 @@ export class LancamentoCadastroComponent implements OnInit {
   carregarLancamento(codigo: number) {
     this.lancamentoService.buscarPorCodigo(codigo)
       .then(lancamento => {
-        this.formulario.setValue(lancamento)
+        this.formulario.patchValue(lancamento)
       },
-        erro => this.errorHandler.handle(erro));
+      erro => this.errorHandler.handle(erro));
   }
+
 
 
   carregarCategorias() {

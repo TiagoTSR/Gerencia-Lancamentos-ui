@@ -16,6 +16,7 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { SharedModule } from '../shared/shared.module';
 import { LancamentosRoutingModule } from './lancamentos-routing.module';
+import { NgxCurrencyDirective } from "ngx-currency";
 
 
 
@@ -39,7 +40,8 @@ import { LancamentosRoutingModule } from './lancamentos-routing.module';
     InputNumberModule,
     InputMaskModule,
     SharedModule,
-    LancamentosRoutingModule
+    LancamentosRoutingModule,
+    NgxCurrencyDirective
   ],
   declarations: [LancamentosPesquisaComponent,
     LancamentoCadastroComponent
