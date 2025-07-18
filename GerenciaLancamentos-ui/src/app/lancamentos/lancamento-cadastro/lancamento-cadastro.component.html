@@ -7,8 +7,7 @@
       </div>
 
       <div class="p-col-12">
-        <p-selectButton name="tipo" [options]="tipos"
-          formControlName="tipo"></p-selectButton>
+        <p-selectButton name="tipo" [options]="tipos" formControlName="tipo"></p-selectButton>
       </div>
 
       <div class="p-col-6 p-md-3 p-fluid">
@@ -28,40 +27,37 @@
 
       <div class="p-col-12 p-md-9 p-fluid">
         <label>Descrição</label>
-        <input pInputText type="text" name="descricao"
-          formControlName="descricao">
+        <input pInputText type="text" name="descricao" formControlName="descricao">
 
         <app-message [control]="formulario.get('descricao')" error="required"
           text="Informe uma descrição"></app-message>
         <app-message [control]="formulario.get('descricao')" error="minlength"
-          text="Mínimo de {{ formulario.get('descricao')?.errors?.['minlength?']'.requiredLength }} caracteres"></app-message>
+          text="Mínimo de {{ formulario.get('descricao')?.errors?.['minlength']?.requiredLength }} caracteres"></app-message>
       </div>
 
       <div class="p-col-12 p-md-3 p-fluid">
         <label>Valor</label>
         <input pInputText type="text" name="valor" placeholder="0,00"
-          currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
-          formControlName="valor">
+       currencyMask
+       [currencyMask]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+       formControlName="valor" />
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid" formGroupName="categoria">
         <label>Categoria</label>
-        <p-dropdown name="categoria" [options]="categorias"
-          placeholder="Selecione"
+        <p-dropdown name="categoria" [options]="categorias" placeholder="Selecione"
           formControlName="codigo"></p-dropdown>
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid" formGroupName="pessoa">
         <label>Pessoa</label>
         <p-dropdown name="pessoa" [options]="pessoas" placeholder="Selecione"
-          [filter]="true"
-          formControlName="codigo"></p-dropdown>
+          [filter]="true" formControlName="codigo"></p-dropdown>
       </div>
 
       <div class="p-col-12 p-fluid">
         <label>Observação</label>
-        <textarea pInputTextarea rows="3" name="observacao"
-          formControlName="observacao"></textarea>
+        <textarea pInputTextarea rows="3" name="observacao" formControlName="observacao"></textarea>
       </div>
 
       <div class="p-col-12">

@@ -6,6 +6,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { Title } from '@angular/platform-browser';
 
 @Component({
+  standalone: false,
   selector: 'app-pessoas-pesquisa',
   templateUrl: './pessoas-pesquisa.component.html',
   styleUrls: ['./pessoas-pesquisa.component.scss']

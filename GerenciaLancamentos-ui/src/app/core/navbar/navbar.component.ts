@@ -5,6 +5,7 @@ import { AuthService } from './../../seguranca/auth.service';
 import { ErrorHandlerService } from './../error-handler.service';
 
 @Component({
+  standalone: false,
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']

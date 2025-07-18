@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -15,7 +15,8 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-lancamento-cadastro',
   templateUrl: './lancamento-cadastro.component.html',
-  styleUrls: ['./lancamento-cadastro.component.scss']
+  styleUrls: ['./lancamento-cadastro.component.scss'],
+  standalone: false,
 })
 export class LancamentoCadastroComponent implements OnInit {
 

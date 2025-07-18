@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 @Component({
+  standalone: false,
   selector: 'app-pessoa-cadastro',
   templateUrl: './pessoa-cadastro.component.html',
   styleUrls: ['./pessoa-cadastro.component.scss']

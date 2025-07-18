@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table, TableLazyLoadEvent } from 'primeng/table';
 
 import { AuthService } from './../../seguranca/auth.service';
@@ -11,7 +11,8 @@ import { ErrorHandlerService } from '../../core/error-handler.service';
 @Component({
   selector: 'app-lancamentos-pesquisa',
   templateUrl: './lancamentos-pesquisa.component.html',
-  styleUrls: ['./lancamentos-pesquisa.component.scss']
+  styleUrls: ['./lancamentos-pesquisa.component.scss'],
+  standalone: false,
 })
 export class LancamentosPesquisaComponent implements OnInit {
 
