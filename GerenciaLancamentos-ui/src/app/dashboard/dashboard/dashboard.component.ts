@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { DashboardService } from '../dashboard.service';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,39 @@ export class DashboardComponent implements OnInit {
   pieChartData: any;
   lineChartData: any;
 
-  constructor(private dashboardService: DashboardService) { }
+  optionsLine = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context: any): any => {
+            let label = context.dataset.label || '';
+            let value = context.raw || 0;
+            let formattedValue = this.decimalPipe.transform(value, '1.2-2', 'pt_BR');
+            return `${label}: ${formattedValue}`;
+          }
+        }
+      }
+    }
+  }
+
+  optionsPie = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context: any): any => {
+            let label = context.label || '';
+            let value = context.raw || 0;
+            let formattedValue = this.decimalPipe.transform(value, '1.2-2', 'pt_BR');
+            return `${label}: ${formattedValue}`;
+          }
+        }
+      }
+    }
+  }
+
+  constructor(
+    private dashboardService: DashboardService,
+    private decimalPipe: DecimalPipe) { }
 
   ngOnInit() {
     this.configurarGraficoPizza();
@@ -71,6 +104,7 @@ export class DashboardComponent implements OnInit {
       for (const dado of dados) {
         if (dado.dia.getDate() === dia) {
           total = dado.total;
+
           break;
         }
       }
