@@ -1,4 +1,5 @@
 import { Component,OnInit } from '@angular/core';
+import { DashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,15 +10,7 @@ import { Component,OnInit } from '@angular/core';
 
 export class DashboardComponent implements OnInit {
 
-  pieChartData = {
-    labels: ['Mensal', 'Educação', 'Lazer', 'Imprevistos'],
-    datasets: [
-      {
-        data: [2500, 2700, 550, 235],
-        backgroundColor: ['#FF9900', '#109618', '#990099', '#3B3EAC']
-      }
-    ]
-  };
+  pieChartData: any ;
   lineChartData = {
     labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
     datasets: [
@@ -33,9 +26,18 @@ export class DashboardComponent implements OnInit {
     ]
   };
 
-  constructor() { }
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
+    this.configurarGraficoPizza();
+  }
+  configurarGraficoPizza() {
+    this.dashboardService.lancamentosPorCategoria()
+      .then(dados => {
+        this.pieChartData.labels = dados.map(dado => dado.categoria);
+        this.pieChartData.datasets[0].data = dados.map(dado => dado.total);
+      })
+      .catch(erro => console.error('Erro ao carregar dados por categoria', erro));
   }
 
 }
