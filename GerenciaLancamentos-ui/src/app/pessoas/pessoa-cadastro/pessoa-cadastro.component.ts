@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 
 import { PessoaService } from '../pessoa.service';
 import { Pessoa } from '../../core/model';
+import { Contato } from '../../core/model';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -20,6 +21,7 @@ import { Title } from '@angular/platform-browser';
 export class PessoaCadastroComponent implements OnInit {
   pessoa: Pessoa = new Pessoa();
   exbindoFormularioContato: boolean = false;
+  contato?: Contato;
 
 
   constructor(
@@ -42,6 +44,7 @@ export class PessoaCadastroComponent implements OnInit {
   }
 
   prepararNovoContato() {
+    this.contato = {};
     this.exbindoFormularioContato = true;
   }
 
