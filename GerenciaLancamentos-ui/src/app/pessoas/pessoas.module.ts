@@ -7,6 +7,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { PanelModule } from 'primeng/panel';
 
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
@@ -29,6 +30,7 @@ import { RouterModule } from '@angular/router';
     TableModule,
     TooltipModule,
     InputMaskModule,
+    PanelModule,
 
     SharedModule,
     PessoasRoutingModule
