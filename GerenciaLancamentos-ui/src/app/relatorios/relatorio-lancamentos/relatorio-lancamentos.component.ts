@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-relatorio-lancamentos',
@@ -6,6 +6,18 @@ import { Component } from '@angular/core';
   templateUrl: './relatorio-lancamentos.component.html',
   styleUrls: ['./relatorio-lancamentos.component.scss']
 })
-export class RelatorioLancamentosComponent {
+export class RelatorioLancamentosComponent implements OnInit {
 
+  periodoInicio?: Date;
+  periodoFim?: Date;
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  gerar() {
+    console.log(this.periodoInicio);
+    console.log(this.periodoFim);
+  }
 }
