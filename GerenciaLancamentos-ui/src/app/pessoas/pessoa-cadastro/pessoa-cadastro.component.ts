@@ -19,6 +19,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class PessoaCadastroComponent implements OnInit {
   pessoa: Pessoa = new Pessoa();
+  exbindoFormularioContato: boolean = false;
+
 
   constructor(
     private pessoaService: PessoaService,
@@ -37,6 +39,10 @@ export class PessoaCadastroComponent implements OnInit {
     if (codigoPessoa && codigoPessoa !== 'nova') {
       this.carregarPessoa(+codigoPessoa); // Converte para número, se necessário.
     }
+  }
+
+  prepararNovoContato() {
+    this.exbindoFormularioContato = true;
   }
 
   get editando(): boolean {
