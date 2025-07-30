@@ -5,6 +5,7 @@ import localePt from '@angular/common/locales/pt';
 import { NgModule } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { RelatoriosModule } from '../relatorios/relatorios.module';
 
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -34,6 +35,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RouterModule,
 
     ToastModule,
+    RelatoriosModule,
     ConfirmDialogModule,
 
     TranslateModule.forRoot({
