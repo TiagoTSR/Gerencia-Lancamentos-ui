@@ -20,6 +20,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class LancamentoCadastroComponent implements OnInit {
 
+  uploadEmAndamento: boolean = false;
+
   lancamento: Lancamento = new Lancamento();
   formulario!: FormGroup;
 
@@ -62,10 +64,15 @@ export class LancamentoCadastroComponent implements OnInit {
       anexo: anexo.nome,
       urlAnexo: anexo.url.replace('\\\\', 'https://')
     });
+    this.uploadEmAndamento = false;
+  }
+  antesUploadAnexo() {
+    this.uploadEmAndamento = true;
   }
 
    erroUpload(event: any) {
     this.messageService.add({ severity: 'error', detail: 'Erro ao tentar enviar anexo!' });
+    this.uploadEmAndamento = false;
   }
 
   get nomeAnexo() {

@@ -13,6 +13,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { TooltipModule } from 'primeng/tooltip';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
@@ -40,6 +42,7 @@ import { NgxCurrencyWrapperModule } from '../ngx/ngx-currency-wrapper-module.mod
     TableModule,
     TabViewModule,
     TooltipModule,
+    ProgressSpinnerModule,     
     SharedModule,
     LancamentosRoutingModule,
     FileUploadModule,
