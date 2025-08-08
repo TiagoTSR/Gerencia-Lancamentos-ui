@@ -9,6 +9,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { TooltipModule } from 'primeng/tooltip';
@@ -41,6 +42,7 @@ import { NgxCurrencyWrapperModule } from '../ngx/ngx-currency-wrapper-module.mod
     TooltipModule,
     SharedModule,
     LancamentosRoutingModule,
+    FileUploadModule,
     NgxCurrencyWrapperModule
   ],
   exports: [

@@ -55,6 +55,15 @@ export class LancamentoCadastroComponent implements OnInit {
     this.carregarCategorias()
     this.carregarPessoas()
   }
+  
+  get uploadHeaders() {
+    return this.lancamentoService.uploadHeaders();
+  }
+
+
+  urlUploadAnexo(): string {
+    return this.lancamentoService.urlUploadAnexo();
+  }
 
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
