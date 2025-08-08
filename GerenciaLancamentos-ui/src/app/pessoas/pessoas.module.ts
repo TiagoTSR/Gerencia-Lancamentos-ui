@@ -15,11 +15,13 @@ import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.co
 import { SharedModule } from "../shared/shared.module";
 import { PessoasRoutingModule } from './pessoas-routing.module';
 import { RouterModule } from '@angular/router';
+import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa-cadastro-contato.component';
 
 @NgModule({
   declarations: [
     PessoaCadastroComponent,
-    PessoasPesquisaComponent
+    PessoasPesquisaComponent,
+    PessoaCadastroContatoComponent
   ],
   imports: [
     CommonModule,

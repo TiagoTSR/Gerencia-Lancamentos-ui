@@ -44,31 +44,6 @@ export class PessoaCadastroComponent implements OnInit {
     }
   }
 
-  prepararNovoContato() {
-    this.contato = {};
-    this.contato = new Contato();
-  }
-
-  prepararEdicaoContato(contato: Contato, index: number) {
-    this.contato = this.clonarContato(contato);
-    this.exbindoFormularioContato = true;
-    this.contatoIndex = index;
-  }
-
-
-  confirmarContato(frm: NgForm) {
-    this.pessoa.contatos[this.contatoIndex!] = this.clonarContato(this.contato!);
-    this.exbindoFormularioContato = false;
-    frm.reset();
-  }
-
-  removerContato(index: number) {
-    this.pessoa.contatos.splice(index, 1);
-  }
-
-  clonarContato(contato: Contato): Contato {
-    return new Contato(contato.codigo, contato.nome, contato.email, contato.telefone);
-  }
 
   get editando(): boolean {
     return Boolean(this.pessoa.codigo);
