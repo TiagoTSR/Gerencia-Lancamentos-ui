@@ -95,6 +95,13 @@ export class LancamentoCadastroComponent implements OnInit {
   urlUploadAnexo(): string {
     return this.lancamentoService.urlUploadAnexo();
   }
+  
+  removerAnexo() {
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
+  }
 
   configurarFormulario() {
     this.formulario = this.formBuilder.group({
