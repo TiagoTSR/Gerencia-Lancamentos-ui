@@ -22,6 +22,7 @@ export class PessoaCadastroComponent implements OnInit {
   pessoa: Pessoa = new Pessoa();
   exbindoFormularioContato: boolean = false;
   contato?: Contato;
+  contatoIndex?: number;
 
 
   constructor(
@@ -48,8 +49,15 @@ export class PessoaCadastroComponent implements OnInit {
     this.contato = new Contato();
   }
 
+  prepararEdicaoContato(contato: Contato, index: number) {
+    this.contato = this.clonarContato(contato);
+    this.exbindoFormularioContato = true;
+    this.contatoIndex = index;
+  }
+
+
   confirmarContato(frm: NgForm) {
-    this.pessoa.contatos.push(this.clonarContato(this.contato!));
+    this.pessoa.contatos[this.contatoIndex!] = this.clonarContato(this.contato!);
     this.exbindoFormularioContato = false;
     frm.reset();
   }
