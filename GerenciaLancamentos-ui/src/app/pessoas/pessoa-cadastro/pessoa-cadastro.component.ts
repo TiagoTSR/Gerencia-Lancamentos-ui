@@ -24,6 +24,8 @@ export class PessoaCadastroComponent implements OnInit {
   contato?: Contato;
   contatoIndex?: number;
   estados: any[] = [];
+  cidades: any[] = [];
+  estadoSelecionado?: number;
 
 
   constructor(
@@ -43,6 +45,13 @@ export class PessoaCadastroComponent implements OnInit {
     if (codigoPessoa && codigoPessoa !== 'nova') {
       this.carregarPessoa(+codigoPessoa); // Converte para número, se necessário.
     }
+  }
+
+  carregarCidades() {
+    this.pessoaService.pesquisarCidades(this.estadoSelecionado!).then(lista => {
+      this.cidades = lista.map(c => ({ label: c.nome, value: c.codigo }));
+    })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   carregarEstados() {
