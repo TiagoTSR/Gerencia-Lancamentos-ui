@@ -30,7 +30,8 @@ export class LancamentoService {
 uploadHeaders(): HttpHeaders {
   return new HttpHeaders({
     Authorization: 'Bearer ' + (localStorage.getItem('token') || '')
-  });
+    
+  })
 }
   
   urlUploadAnexo(): string {

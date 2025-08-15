@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Pessoa } from '../core/model';
+import { Pessoa, Estado,Cidade } from '../core/model';
+import { environment } from '../../environments/environment.prod';
 
 export class PessoaFiltro {
   nome?: string;
@@ -12,9 +13,15 @@ export class PessoaFiltro {
   providedIn: 'root'
 })
 export class PessoaService {
-  pessoasUrl = 'http://localhost:8080/pessoas';
+  pessoasUrl: string
+  cidadesUrl: string;
+  estadosUrl: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.pessoasUrl = `${environment.apiUrl}/pessoas`;
+    this.estadosUrl = `${environment.apiUrl}/estados`;
+    this.cidadesUrl = `${environment.apiUrl}/cidades`;
+  }
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
     let params = new HttpParams()
@@ -54,17 +61,58 @@ export class PessoaService {
       .toPromise();
   }
 
-  adicionar(pessoa: Pessoa): Promise<Pessoa | undefined> {
+  adicionar(pessoa: Pessoa): Promise<Pessoa> {
     return this.http.post<Pessoa>(this.pessoasUrl, pessoa)
-      .toPromise();
+      .toPromise()
+      .then((response: Pessoa | undefined) => {
+        if (!response) {
+          throw new Error('Pessoa não foi criada corretamente.');
+        }
+        return response;
+      });
   }
 
-  atualizar(pessoa: Pessoa): Promise<Pessoa | undefined> {
-    return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa).toPromise();
+  atualizar(pessoa: Pessoa): Promise<Pessoa> {
+    return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa)
+      .toPromise()
+      .then((response: Pessoa | undefined) => {
+        if (!response) {
+          throw new Error('Pessoa não foi atualizada corretamente.');
+        }
+        return response;
+      });
   }
 
-  buscarPorCodigo(codigo: number): Promise<Pessoa | undefined> {
-    return this.http.get<Pessoa>(`${this.pessoasUrl}/${codigo}`).toPromise();
+  buscarPorCodigo(codigo: number): Promise<Pessoa> {
+    return this.http.get<Pessoa>(`${this.pessoasUrl}/${codigo}`).toPromise()
+      .then((response: Pessoa | undefined) => {
+        if (!response) {
+          throw new Error('Pessoa não encontrada.');
+        }
+        return response;
+      });
   }
 
+  listarEstados(): Promise<Estado[]> {
+    return this.http.get<Estado[]>(this.estadosUrl).toPromise()
+      .then((response: Estado[] | undefined) => {
+        if (!response) {
+          return [];
+        }
+        return response;
+      });
+  }
+
+  pesquisarCidades(estadoId: number): Promise<Cidade[]> {
+    const params = new HttpParams()
+      .set('estado', estadoId);
+
+    return this.http.get<Cidade[]>(this.cidadesUrl, { params }).toPromise()
+      .then((response: Cidade[] | undefined) => {
+        if (!response) {
+          return [];
+        }
+        return response;
+      });
+  }
 }
