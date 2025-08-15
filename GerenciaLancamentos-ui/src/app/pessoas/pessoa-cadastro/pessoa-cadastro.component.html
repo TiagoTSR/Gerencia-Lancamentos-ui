@@ -63,11 +63,9 @@
 
       <div class="col-12 md:col-6 p-fluid">
         <label>Estado</label>
-        <input pInputText type="text" name="estado" [(ngModel)]="pessoa.endereco.estado" #estado="ngModel"
-          [required]="true">
-
-        <app-message [control]="estado.control" error="required" text="Informe o estado"></app-message>
+        <p-dropdown placeholder="Selecione..." [filter]="true" [options]="estados"></p-dropdown>
       </div>
+
 
       <div class="col-12">
         <p-panel header="Contatos">

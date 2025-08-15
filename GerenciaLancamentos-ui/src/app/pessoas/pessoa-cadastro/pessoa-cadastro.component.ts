@@ -23,6 +23,7 @@ export class PessoaCadastroComponent implements OnInit {
   exbindoFormularioContato: boolean = false;
   contato?: Contato;
   contatoIndex?: number;
+  estados: any[] = [];
 
 
   constructor(
@@ -44,9 +45,15 @@ export class PessoaCadastroComponent implements OnInit {
     }
   }
 
+  carregarEstados() {
+    this.pessoaService.listarEstados().then(lista => {
+      this.estados = lista.map(uf => ({ label: uf.nome, value: uf.codigo }));
+    })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
 
-  get editando(): boolean {
-    return Boolean(this.pessoa.codigo);
+  get editando() {
+    return Boolean(this.pessoa.codigo)
   }
   
   
