@@ -66,19 +66,25 @@ export class PessoaCadastroComponent implements OnInit {
   }
   
   
-  carregarPessoa(codigo: number) {
-    this.pessoaService
-      .buscarPorCodigo(codigo)
-      .then((pessoa: Pessoa | undefined) => {
-        if (pessoa) {
-          this.pessoa = pessoa;
-          this.atualizarTituloEdicao();
-        } else {
-          this.messageService.add({ severity: 'warn', detail: 'Pessoa não encontrada.' });
-        }
-      })
-      .catch((erro: any) => this.errorHandler.handle(erro));
-  }
+isCidadeComEstado(cidade: any): cidade is { estado: { codigo: number } } {
+  return cidade && typeof cidade === 'object' && 'estado' in cidade && cidade.estado && typeof cidade.estado.codigo === 'number';
+}
+
+carregarPessoa(codigo: number) {
+  this.pessoaService.buscarPorCodigo(codigo)
+    .then((pessoa: Pessoa) => {
+      this.pessoa = pessoa;
+      this.estadoSelecionado = this.isCidadeComEstado(this.pessoa.endereco.cidade)
+        ? this.pessoa.endereco.cidade.estado.codigo
+        : undefined;
+
+      if (this.estadoSelecionado) {
+        this.carregarCidades();
+      }
+      this.atualizarTituloEdicao();
+    })
+    .catch((erro: any) => this.errorHandler.handle(erro));
+}
 
   salvar(form: NgForm) {
     if (this.editando) {
