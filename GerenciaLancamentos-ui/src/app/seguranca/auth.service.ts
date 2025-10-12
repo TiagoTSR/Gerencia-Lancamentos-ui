@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,19 @@ export class AuthService {
   }
 
   login() {
-    const state = 'abc';
+    const state = this.gerarStringAleatoria(40);
+    const codeVerifier = this.gerarStringAleatoria(128);
+
+    localStorage.setItem('state', state);
+    localStorage.setItem('codeVerifier', codeVerifier);
+
     const challengeMethod = 'S256'
-    const codeChallenge = 'desafio123'
+    const codeChallenge = CryptoJS.SHA256(codeVerifier)
+      .toString(CryptoJS.enc.Base64)
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+
     const redirectURI = encodeURIComponent(environment.oauthCallbackUrl);
 
     const clientId = 'angular'
@@ -37,10 +48,10 @@ export class AuthService {
       'code_challenge=' + codeChallenge,
       'code_challenge_method=' + challengeMethod,
       'state=' + state,
-      'redirect_uri=' + redirectURI 
+      'redirect_uri=' + redirectURI
     ]
 
-    window.location.href = this.oauthAuthorizeUrl + '?' +  params.join('&');
+    window.location.href = this.oauthAuthorizeUrl + '?' + params.join('&');
   }
 
   obterNovoAccessToken(): Promise<void> {
@@ -101,6 +112,16 @@ export class AuthService {
   limparAccessToken() {
     localStorage.removeItem('token');
     this.jwtPayload = null;
+  }
+
+  private gerarStringAleatoria(tamanho: number) {
+    let resultado = '';
+    //Chars que são URL safe
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < tamanho; i++) {
+      resultado += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return resultado;
   }
 
   logout() {
