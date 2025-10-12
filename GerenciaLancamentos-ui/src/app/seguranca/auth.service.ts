@@ -1,15 +1,17 @@
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  tokensRevokeUrl = 'http://localhost:8080/tokens/revoke';
-  oauthTokenUrl = 'http://localhost:8080/oauth/token';
+   oauthTokenUrl = environment.apiUrl + '/oauth2/token';
+  oauthAuthorizeUrl = environment.apiUrl + '/oauth2/authorize'
   jwtPayload: any;
+  tokensRevokeUrl = environment.apiUrl + '/tokens/revoke';
 
   constructor(
     private http: HttpClient,
@@ -18,27 +20,27 @@ export class AuthService {
     this.carregarToken();
   }
 
-  login(usuario: string, senha: string): Promise<void> {
-    const headers = new HttpHeaders()
-      .append('Content-Type', 'application/x-www-form-urlencoded')
-      .append('Authorization', 'Basic VGlhZ286bm9uZTM0NQ==');
+  login() {
+    const state = 'abc';
+    const challengeMethod = 'S256'
+    const codeChallenge = 'desafio123'
+    const redirectURI = encodeURIComponent(environment.oauthCallbackUrl);
 
-    const body = `username=${usuario}&password=${senha}&grant_type=password`;
+    const clientId = 'angular'
+    const scope = 'read write'
+    const responseType = 'code'
 
-    return this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
-      .toPromise()
-      .then((response: any) => {
-        this.armazenarToken(response['access_token']);
-      })
-      .catch(response => {
-        if (response.status === 400) {
-          if (response.error.error === 'invalid_grant') {
-            return Promise.reject('Usuário ou senha inválida!');
-          }
-        }
+    const params = [
+      'response_type=' + responseType,
+      'client_id=' + clientId,
+      'scope=' + scope,
+      'code_challenge=' + codeChallenge,
+      'code_challenge_method=' + challengeMethod,
+      'state=' + state,
+      'redirect_uri=' + redirectURI 
+    ]
 
-        return Promise.reject(response);
-      });
+    window.location.href = this.oauthAuthorizeUrl + '?' +  params.join('&');
   }
 
   obterNovoAccessToken(): Promise<void> {

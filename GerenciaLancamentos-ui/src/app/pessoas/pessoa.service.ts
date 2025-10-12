@@ -52,12 +52,12 @@ export class PessoaService {
       .then((response: any) => response['content']);
   }
 
-  excluir(codigo: number): Promise<void> {
-    return this.http.delete<void>(`${this.pessoasUrl}/${codigo}`).toPromise();
+  excluir(id: number): Promise<void> {
+    return this.http.delete<void>(`${this.pessoasUrl}/${id}`).toPromise();
   }
 
-  mudarStatus(codigo: number, ativo: boolean): Promise<void> {
-    return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, ativo)
+  mudarStatus(id: number, ativo: boolean): Promise<void> {
+    return this.http.put<void>(`${this.pessoasUrl}/${id}/ativo`, ativo)
       .toPromise();
   }
 
@@ -73,7 +73,7 @@ export class PessoaService {
   }
 
   atualizar(pessoa: Pessoa): Promise<Pessoa> {
-    return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa)
+    return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.id}`, pessoa)
       .toPromise()
       .then((response: Pessoa | undefined) => {
         if (!response) {
@@ -83,8 +83,8 @@ export class PessoaService {
       });
   }
 
-  buscarPorCodigo(codigo: number): Promise<Pessoa> {
-    return this.http.get<Pessoa>(`${this.pessoasUrl}/${codigo}`).toPromise()
+  buscarPorCodigo(id: number): Promise<Pessoa> {
+    return this.http.get<Pessoa>(`${this.pessoasUrl}/${id}`).toPromise()
       .then((response: Pessoa | undefined) => {
         if (!response) {
           throw new Error('Pessoa não encontrada.');

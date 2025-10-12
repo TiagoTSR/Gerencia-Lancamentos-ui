@@ -22,8 +22,8 @@ export class AuthGuard implements CanActivate {
 
       return this.auth.obterNovoAccessToken()
         .then(() => {
-          if (this.auth.isAccessTokenInvalido()) {
-            this.router.navigate(['/login']);
+           if (this.auth.isAccessTokenInvalido()) {
+            this.auth.login();
             return false;
           }
 

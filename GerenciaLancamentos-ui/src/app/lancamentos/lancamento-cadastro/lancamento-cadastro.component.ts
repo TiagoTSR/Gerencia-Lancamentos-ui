@@ -46,7 +46,7 @@ export class LancamentoCadastroComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const codigoLancamento = this.route.snapshot.params['codigo'];
+    const codigoLancamento = this.route.snapshot.params['id'];
 
     this.title.setTitle('Novo lançamento')
 
@@ -188,9 +188,9 @@ export class LancamentoCadastroComponent implements OnInit {
   adicionarLancamento() {
     this.lancamentoService.adicionar(this.formulario.value)
       .then((lancamentoAdicionado: Lancamento | undefined) => {
-        if (lancamentoAdicionado && lancamentoAdicionado.codigo) {
+        if (lancamentoAdicionado && lancamentoAdicionado.id) {
           this.messageService.add({ severity: 'success', detail: 'Lançamento adicionado com sucesso!' });
-          this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
+          this.router.navigate(['/lancamentos', lancamentoAdicionado.id]);
         } else {
           this.messageService.add({ severity: 'error', detail: 'Erro ao adicionar o lançamento. Código não encontrado!' });
         }

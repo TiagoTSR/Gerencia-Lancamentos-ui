@@ -38,7 +38,7 @@ export class PessoaCadastroComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const codigoPessoa = this.route.snapshot.params['codigo'];
+    const codigoPessoa = this.route.snapshot.params['id'];
 
     this.title.setTitle('Nova pessoa');
 
@@ -49,20 +49,20 @@ export class PessoaCadastroComponent implements OnInit {
 
   carregarCidades() {
     this.pessoaService.pesquisarCidades(this.estadoSelecionado!).then(lista => {
-      this.cidades = lista.map(c => ({ label: c.nome, value: c.codigo }));
+      this.cidades = lista.map(c => ({ label: c.nome, value: c.id }));
     })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
   carregarEstados() {
     this.pessoaService.listarEstados().then(lista => {
-      this.estados = lista.map(uf => ({ label: uf.nome, value: uf.codigo }));
+      this.estados = lista.map(uf => ({ label: uf.nome, value: uf.id }));
     })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
   get editando() {
-    return Boolean(this.pessoa.codigo)
+    return Boolean(this.pessoa.id)
   }
   
   
@@ -70,8 +70,8 @@ isCidadeComEstado(cidade: any): cidade is { estado: { codigo: number } } {
   return cidade && typeof cidade === 'object' && 'estado' in cidade && cidade.estado && typeof cidade.estado.codigo === 'number';
 }
 
-carregarPessoa(codigo: number) {
-  this.pessoaService.buscarPorCodigo(codigo)
+carregarPessoa(id: number) {
+  this.pessoaService.buscarPorCodigo(id)
     .then((pessoa: Pessoa) => {
       this.pessoa = pessoa;
       this.estadoSelecionado = this.isCidadeComEstado(this.pessoa.endereco.cidade)
@@ -100,7 +100,7 @@ carregarPessoa(codigo: number) {
       .then((pessoaAdicionada: Pessoa | undefined) => {
         if (pessoaAdicionada) {
           this.messageService.add({ severity: 'success', detail: 'Pessoa adicionada com sucesso!' });
-          this.router.navigate(['pessoas', pessoaAdicionada.codigo]);
+          this.router.navigate(['pessoas', pessoaAdicionada.id]);
         }
       })
       .catch((erro: any) => this.errorHandler.handle(erro));

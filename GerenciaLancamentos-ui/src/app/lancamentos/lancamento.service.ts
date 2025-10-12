@@ -79,7 +79,7 @@ uploadHeaders(): HttpHeaders {
   }
 
   atualizar(lancamento: Lancamento): Promise<Lancamento> {
-    return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento)
+    return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.id}`, lancamento)
       .toPromise()
       .then((response: any) => {
         this.converterStringsParaDatas([response]);

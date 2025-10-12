@@ -7,7 +7,6 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { LoginFormComponent } from './login-form/login-form.component';
 
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { GerenciaHttpInterceptor } from './gerencia-http-interceptor';
@@ -17,7 +16,6 @@ export function tokenGetter(): string {
 }
 @NgModule({
   declarations: [
-    LoginFormComponent
   ],
   imports: [
     CommonModule,

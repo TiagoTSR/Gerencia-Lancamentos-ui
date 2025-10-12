@@ -9,18 +9,18 @@ export class Endereco {
 }
 
 export class Contato {
-  codigo?: number;
+  id?: number;
   nome?: string;
   email?: string;
   telefone?: string;
 
   constructor(
-    codigo?: number,
+    id?: number,
     nome?: string,
     email?: string,
     telefone?: string) {
 
-    this.codigo = codigo;
+    this.id = id;
     this.nome = nome;
     this.email = email;
     this.telefone = telefone;
@@ -28,19 +28,19 @@ export class Contato {
 }
 
 export class Estado {
-  codigo?: number;
+  id?: number;
   nome?: string;
 }
 
 export class Cidade {
-  codigo?: number;
+  id?: number;
   nome?: string;
   estado = new Estado();
 }
 
 
 export class Pessoa {
-  codigo?: number;
+  id?: number;
   nome?: string;
   endereco = new Endereco();
   ativo = true;
@@ -48,11 +48,11 @@ export class Pessoa {
 }
 
 export class Categoria {
-  codigo?: number;
+  id?: number;
 }
 
 export class Lancamento {
-  codigo?: number;
+  id?: number;
   tipo = 'RECEITA';
   descricao?: string;
   dataVencimento?: Date;
