@@ -1,25 +1,26 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { environment } from '../../environments/environment';
 import * as CryptoJS from 'crypto-js';
+import { firstValueFrom } from 'rxjs';
+import { environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-   oauthTokenUrl = environment.apiUrl + '/oauth2/token';
+  oauthTokenUrl = environment.apiUrl + '/oauth2/token';
   oauthAuthorizeUrl = environment.apiUrl + '/oauth2/authorize'
-  jwtPayload: any;
-  tokensRevokeUrl = environment.apiUrl + '/tokens/revoke';
+  jwtPayload: any ;
 
   constructor(
     private http: HttpClient,
-    private jwtHelper: JwtHelperService
-  ) {
+    private jwtHelper: JwtHelperService  
+  ) { 
     this.carregarToken();
   }
+
+  private readonly CLIENT_ID = 'angular';
 
   login() {
     const state = this.gerarStringAleatoria(40);
@@ -31,13 +32,13 @@ export class AuthService {
     const challengeMethod = 'S256'
     const codeChallenge = CryptoJS.SHA256(codeVerifier)
       .toString(CryptoJS.enc.Base64)
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=+$/, "");
+      .replace(/=/g, '')          // ✅ CERTO
+      .replace(/\+/g, '-')        // ✅ CERTO (+ vira -)
+      .replace(/\//g, '_');       // ✅ CERTO (/ vira _)
 
     const redirectURI = encodeURIComponent(environment.oauthCallbackUrl);
 
-    const clientId = 'angular'
+    const clientId = this.CLIENT_ID;
     const scope = 'read write'
     const responseType = 'code'
 
@@ -48,44 +49,98 @@ export class AuthService {
       'code_challenge=' + codeChallenge,
       'code_challenge_method=' + challengeMethod,
       'state=' + state,
-      'redirect_uri=' + redirectURI
+      'redirect_uri=' + redirectURI 
     ]
 
-    window.location.href = this.oauthAuthorizeUrl + '?' + params.join('&');
+    window.location.href = this.oauthAuthorizeUrl + '?' +  params.join('&');
+  }
+
+  logout() {
+  const refreshToken = localStorage.getItem('refreshToken');
+  if (refreshToken) {
+    this.http.post('/oauth2/revoke', { token: refreshToken }).subscribe();
+  }
+  localStorage.clear();
+  window.location.href = '/logout?returnTo=...';
+}
+
+  obterNovoAccessTokenComCode(code: string, state: string) : Promise<any>{
+    const stateSalvo = localStorage.getItem('state');
+
+    if (stateSalvo !== state) {
+      return Promise.reject(null);
+    }
+
+    const codeVerifier = localStorage.getItem('codeVerifier')!;
+
+    const payload = new HttpParams()
+      .append('grant_type', 'authorization_code')
+      .append('code', code)
+      .append('redirect_uri', environment.oauthCallbackUrl)
+      .append('code_verifier', codeVerifier)
+      .append('client_id', this.CLIENT_ID);
+
+   const headers = new HttpHeaders()
+     .set('Content-Type', 'application/x-www-form-urlencoded');
+
+    return firstValueFrom(this.http.post<any>(this.oauthTokenUrl, payload, { headers }))
+      .then((response:any) => {
+        this.armazenarToken(response['access_token']);
+        this.armazenarRefreshToken(response['refresh_token']);
+        console.log('Novo access token criado!');
+        return Promise.resolve(null);
+      })
+      .catch((response:any) => {
+        console.error('Erro ao gerar o token com o code.', response);
+        return Promise.resolve();
+      });
+      
   }
 
   obterNovoAccessToken(): Promise<void> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    const codeVerifier = localStorage.getItem('codeVerifier');
+
+    if (!refreshToken || !codeVerifier) {
+      console.error('Refresh token ou code verifier não encontrado');
+      this.login();
+      return Promise.reject();
+    }
+
     const headers = new HttpHeaders()
-      .append('Content-Type', 'application/x-www-form-urlencoded')
-      .append('Authorization', 'Basic VGlhZ286bm9uZTM0NQ==');
+      .set('Content-Type', 'application/x-www-form-urlencoded');
+      
+    const payload = new HttpParams()
+      .append('grant_type', 'refresh_token')
+      .append('refresh_token', refreshToken)
+      .append('client_id', this.CLIENT_ID)
+      .append('code_verifier', codeVerifier)
+      .append('scope', 'read write');
 
-    const body = 'grant_type=refresh_token';
-
-    return this.http.post<any>(this.oauthTokenUrl, body,
-      { headers, withCredentials: true })
-      .toPromise()
-      .then((response: any) => {
+    return firstValueFrom(this.http.post<any>(this.oauthTokenUrl, payload, { headers, withCredentials: true }))
+      .then((response:any) => {
         this.armazenarToken(response['access_token']);
-
+        this.armazenarRefreshToken(response['refresh_token'])
         console.log('Novo access token criado!');
 
         return Promise.resolve();
       })
-      .catch(response => {
+      .catch((response:any) => {
         console.error('Erro ao renovar token.', response);
-        return Promise.resolve();
+        this.login();
+        return Promise.reject();
       });
   }
 
   isAccessTokenInvalido() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');  
     return !token || this.jwtHelper.isTokenExpired(token);
   }
 
   temPermissao(permissao: string) {
     return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
   }
-
+  
   temQualquerPermissao(roles: any) {
     for (const role of roles) {
       if (this.temPermissao(role)) {
@@ -95,9 +150,11 @@ export class AuthService {
 
     return false;
   }
-
+  
   public armazenarToken(token: string) {
     this.jwtPayload = this.jwtHelper.decodeToken(token);
+    console.log(this.jwtPayload);
+    
     localStorage.setItem('token', token);
   }
 
@@ -114,22 +171,18 @@ export class AuthService {
     this.jwtPayload = null;
   }
 
+  private armazenarRefreshToken(refreshToken: string) {
+    localStorage.setItem('refreshToken', refreshToken);
+  }
+
   private gerarStringAleatoria(tamanho: number) {
     let resultado = '';
-    //Chars que são URL safe
+    //Chars são URL safe
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (let i = 0; i < tamanho; i++) {
       resultado += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return resultado;
-  }
-
-  logout() {
-    return this.http.delete(this.tokensRevokeUrl, { withCredentials: true })
-      .toPromise()
-      .then(() => {
-        this.limparAccessToken();
-      });
-  }
+} 
 
 }

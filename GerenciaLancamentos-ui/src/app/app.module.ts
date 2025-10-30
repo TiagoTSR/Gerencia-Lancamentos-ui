@@ -16,6 +16,7 @@ import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { SegurancaRoutingModule } from './seguranca/seguranca-routing.module';
 import { RelatoriosModule } from './relatorios/relatorios.module';
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -34,7 +35,8 @@ import { RelatoriosModule } from './relatorios/relatorios.module';
     SharedModule,
     RelatoriosModule,
     CoreModule,
-    NgxCurrencyDirective
+    NgxCurrencyDirective,
+    SegurancaRoutingModule
   ],
   providers: [
   MessageService,
