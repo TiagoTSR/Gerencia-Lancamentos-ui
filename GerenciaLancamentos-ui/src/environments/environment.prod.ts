@@ -1,7 +1,8 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8080',
-  tokenAllowedDomains: [/localhost:8080/],
+  production: true,
+  apiUrl: 'https://gerencia-api.herokuapp.com',
+  authServerUrl: 'https://gerencia-api.herokuapp.com',
+  tokenAllowedDomains: [ /gerencia-api.herokuapp.com/ ],
   tokenDisallowedRoutes: [/\/oauth2\/token/],
-  oauthCallbackUrl: 'http://local-gerencia.com:8000/authorized'
+  oauthCallbackUrl: 'https://oidcdebugger.com/debug'
 };

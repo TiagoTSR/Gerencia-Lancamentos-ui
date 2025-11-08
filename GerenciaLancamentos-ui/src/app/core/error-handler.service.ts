@@ -1,9 +1,8 @@
+import { AuthService } from './../seguranca/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { NotAuthenticatedError } from '../seguranca/gerencia-http-interceptor';
-import { AuthService } from '../seguranca/auth.service';
-
 
 @Injectable({
   providedIn: 'root'

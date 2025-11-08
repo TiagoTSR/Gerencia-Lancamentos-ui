@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from './../../seguranca/auth.service';
-import { ErrorHandlerService } from './../error-handler.service';
 
 @Component({
-  standalone: false,
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
+  standalone: false,
 })
 export class NavbarComponent implements OnInit {
 
@@ -15,9 +14,7 @@ export class NavbarComponent implements OnInit {
   usuarioLogado: string = ''
 
   constructor(
-    private auth: AuthService,
-    private errorHandler: ErrorHandlerService,
-  ) { }
+    private auth: AuthService  ) { }
 
   ngOnInit() {
     this.usuarioLogado = this.auth.jwtPayload?.nome;
@@ -28,10 +25,6 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout()
-      .then(() => {
-        this.auth.login();
-      })
-      .catch(erro => this.errorHandler.handle(erro));
+    this.auth.logout();
   }
 }
