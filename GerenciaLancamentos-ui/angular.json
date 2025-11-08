@@ -89,6 +89,7 @@
           "defaultConfiguration": "development",
           "options": {
             "port": 8000,
+            "host": "local-gerencia.com",
             "disableHostCheck": true
           }
         },
