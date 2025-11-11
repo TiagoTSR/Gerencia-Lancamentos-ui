@@ -1,9 +1,9 @@
 export const environment = {
-  production: false,
-  production: false,
+  production: true,
   apiUrl: 'http://localhost:8080',
-  tokenAllowedDomains: [ /localhost:8080/ ],
-  tokenDisallowedRoutes: [/\/oauth2\/token/],
-  oauthCallbackUrl: 'https://oidcdebugger.com/debug',
-  clientSecret: 'sua-senha-secreta-aqui'
+  authServerUrl: 'http://localhost:8080',
+  tokenAllowedDomains: ['localhost:8080'],
+  tokenDisallowedRoutes: [/\/oauth2\/token/, /\/logout/],
+  oauthCallbackUrl: 'http://local-gerencia.com:8000/authorized',
+  logoutRedirectToUrl: 'http://local-gerencia.com:8000'
 };

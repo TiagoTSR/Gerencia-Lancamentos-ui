@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
+  production: false,
   apiUrl: 'https://gerencia-api.herokuapp.com',
   authServerUrl: 'https://gerencia-api.herokuapp.com',
   tokenAllowedDomains: [ /gerencia-api.herokuapp.com/ ],
